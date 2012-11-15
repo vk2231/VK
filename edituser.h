@@ -1,6 +1,8 @@
 #ifndef EDITUSER_H
 #define EDITUSER_H
 
+//Alex Berezin was here.
+
 #include <QDialog>
 
 namespace Ui {
