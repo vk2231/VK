@@ -2,6 +2,8 @@
 #define LOG_H
 
 #include <QDialog>
+//Cool Text. Delete
+
 
 namespace Ui {
     class Log;
