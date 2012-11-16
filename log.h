@@ -2,8 +2,6 @@
 #define LOG_H
 
 #include <QDialog>
-//Cool Text. Delete
-
 
 namespace Ui {
     class Log;
@@ -16,6 +14,8 @@ class Log : public QDialog
 public:
     explicit Log(QWidget *parent = 0);
     ~Log();
+public slots:
+    void log(QString str);
 
 private:
     Ui::Log *ui;

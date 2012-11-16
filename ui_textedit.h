@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'textedit.ui'
 **
-** Created: Fri 2. Nov 14:12:39 2012
+** Created: Thu 15. Nov 14:58:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPlainTextEdit>
 #include <QtGui/QStatusBar>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +35,7 @@ public:
     QAction *actionSave_as;
     QAction *actionExit;
     QWidget *centralwidget;
+    QVBoxLayout *verticalLayout;
     QPlainTextEdit *plainTextEdit;
     QMenuBar *menubar;
     QMenu *menuFile;
@@ -58,9 +60,13 @@ public:
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         centralwidget = new QWidget(TextEdit);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        verticalLayout = new QVBoxLayout(centralwidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         plainTextEdit = new QPlainTextEdit(centralwidget);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(10, 10, 781, 481));
+
+        verticalLayout->addWidget(plainTextEdit);
+
         TextEdit->setCentralWidget(centralwidget);
         menubar = new QMenuBar(TextEdit);
         menubar->setObjectName(QString::fromUtf8("menubar"));

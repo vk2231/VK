@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'edituser.ui'
 **
-** Created: Fri 2. Nov 14:12:39 2012
+** Created: Thu 15. Nov 14:58:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
 #include <QtGui/QListWidget>
@@ -26,8 +27,7 @@ QT_BEGIN_NAMESPACE
 class Ui_EditUser
 {
 public:
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QGridLayout *gridLayout;
     QLineEdit *lineEdit;
     QLineEdit *lineEdit_2;
     QPushButton *pushButton_3;
@@ -37,47 +37,73 @@ public:
     QComboBox *comboBox_2;
     QListWidget *listWidget;
     QListWidget *listWidget_2;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
 
     void setupUi(QDialog *EditUser)
     {
         if (EditUser->objectName().isEmpty())
             EditUser->setObjectName(QString::fromUtf8("EditUser"));
         EditUser->resize(404, 381);
-        pushButton = new QPushButton(EditUser);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(220, 350, 75, 23));
-        pushButton_2 = new QPushButton(EditUser);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(310, 350, 75, 23));
+        gridLayout = new QGridLayout(EditUser);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         lineEdit = new QLineEdit(EditUser);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(40, 20, 113, 20));
+
+        gridLayout->addWidget(lineEdit, 0, 0, 1, 1);
+
         lineEdit_2 = new QLineEdit(EditUser);
         lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(200, 20, 113, 20));
+
+        gridLayout->addWidget(lineEdit_2, 0, 1, 1, 2);
+
         pushButton_3 = new QPushButton(EditUser);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(320, 20, 75, 23));
+
+        gridLayout->addWidget(pushButton_3, 0, 3, 1, 1);
+
         lineEdit_3 = new QLineEdit(EditUser);
         lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
-        lineEdit_3->setGeometry(QRect(40, 50, 113, 20));
+
+        gridLayout->addWidget(lineEdit_3, 1, 0, 1, 1);
+
         lineEdit_4 = new QLineEdit(EditUser);
         lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
-        lineEdit_4->setGeometry(QRect(200, 50, 113, 20));
+
+        gridLayout->addWidget(lineEdit_4, 1, 1, 1, 2);
+
         comboBox = new QComboBox(EditUser);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(40, 90, 111, 22));
+
+        gridLayout->addWidget(comboBox, 2, 0, 1, 1);
+
         comboBox_2 = new QComboBox(EditUser);
         comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
-        comboBox_2->setGeometry(QRect(200, 90, 121, 22));
+
+        gridLayout->addWidget(comboBox_2, 2, 1, 1, 2);
+
         listWidget = new QListWidget(EditUser);
         new QListWidgetItem(listWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(30, 130, 141, 192));
+
+        gridLayout->addWidget(listWidget, 3, 0, 1, 1);
+
         listWidget_2 = new QListWidget(EditUser);
         new QListWidgetItem(listWidget_2);
         listWidget_2->setObjectName(QString::fromUtf8("listWidget_2"));
-        listWidget_2->setGeometry(QRect(220, 130, 161, 191));
+
+        gridLayout->addWidget(listWidget_2, 3, 1, 1, 3);
+
+        pushButton = new QPushButton(EditUser);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        gridLayout->addWidget(pushButton, 4, 1, 1, 1);
+
+        pushButton_2 = new QPushButton(EditUser);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        gridLayout->addWidget(pushButton_2, 4, 2, 1, 2);
+
 
         retranslateUi(EditUser);
 
@@ -86,9 +112,7 @@ public:
 
     void retranslateUi(QDialog *EditUser)
     {
-        EditUser->setWindowTitle(QApplication::translate("EditUser", "Dialog", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("EditUser", "OK", 0, QApplication::UnicodeUTF8));
-        pushButton_2->setText(QApplication::translate("EditUser", "Cancel", 0, QApplication::UnicodeUTF8));
+        EditUser->setWindowTitle(QApplication::translate("EditUser", "Editing user N", 0, QApplication::UnicodeUTF8));
         lineEdit->setText(QApplication::translate("EditUser", "id", 0, QApplication::UnicodeUTF8));
         lineEdit_2->setText(QApplication::translate("EditUser", "Set new password", 0, QApplication::UnicodeUTF8));
         pushButton_3->setText(QApplication::translate("EditUser", "Set", 0, QApplication::UnicodeUTF8));
@@ -116,6 +140,8 @@ public:
         ___qlistwidgetitem1->setText(QApplication::translate("EditUser", "Granted Folder access", 0, QApplication::UnicodeUTF8));
         listWidget_2->setSortingEnabled(__sortingEnabled1);
 
+        pushButton->setText(QApplication::translate("EditUser", "OK", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("EditUser", "Cancel", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

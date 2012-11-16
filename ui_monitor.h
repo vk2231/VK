@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Fri 2. Nov 14:12:39 2012
+** Created: Thu 15. Nov 14:58:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,8 +15,10 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
 #include <QtGui/QTableWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,10 +26,12 @@ QT_BEGIN_NAMESPACE
 class Ui_Monitor
 {
 public:
+    QGridLayout *gridLayout;
     QTableWidget *tableWidget;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
+    QSpacerItem *verticalSpacer;
     QPushButton *pushButton_4;
 
     void setupUi(QDialog *Monitor)
@@ -35,6 +39,8 @@ public:
         if (Monitor->objectName().isEmpty())
             Monitor->setObjectName(QString::fromUtf8("Monitor"));
         Monitor->resize(400, 300);
+        gridLayout = new QGridLayout(Monitor);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         tableWidget = new QTableWidget(Monitor);
         if (tableWidget->columnCount() < 2)
             tableWidget->setColumnCount(2);
@@ -51,19 +57,33 @@ public:
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         tableWidget->setItem(0, 1, __qtablewidgetitem4);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(10, 20, 256, 241));
+
+        gridLayout->addWidget(tableWidget, 0, 0, 6, 1);
+
         pushButton = new QPushButton(Monitor);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(310, 30, 75, 23));
+
+        gridLayout->addWidget(pushButton, 0, 1, 1, 1);
+
         pushButton_2 = new QPushButton(Monitor);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(310, 70, 75, 23));
+
+        gridLayout->addWidget(pushButton_2, 1, 1, 1, 1);
+
         pushButton_3 = new QPushButton(Monitor);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(310, 110, 75, 23));
+
+        gridLayout->addWidget(pushButton_3, 2, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 4, 1, 1, 1);
+
         pushButton_4 = new QPushButton(Monitor);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setGeometry(QRect(320, 240, 75, 23));
+
+        gridLayout->addWidget(pushButton_4, 5, 1, 1, 1);
+
 
         retranslateUi(Monitor);
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 2. Nov 14:12:39 2012
+** Created: Thu 15. Nov 14:58:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,11 +14,13 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTreeView>
 #include <QtGui/QWidget>
@@ -28,20 +30,20 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionNew;
     QAction *actionLogout;
     QAction *actionExit;
-    QAction *actionChange_password;
-    QAction *actionExit_2;
-    QAction *actionEdit_users;
-    QAction *actionView_log;
-    QAction *actionEdit_controled_filed;
-    QAction *actionEdit_mandats;
+    QAction *actionEditUsers;
+    QAction *actionLog;
+    QAction *actionMonitor;
+    QAction *actionProtectedObjects;
     QWidget *centralwidget;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
+    QGridLayout *gridLayout;
     QTreeView *treeView;
+    QPushButton *newFolderButton;
+    QPushButton *newFileButton;
+    QPushButton *deleteButton;
+    QSpacerItem *verticalSpacer;
+    QPushButton *upButton;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuAdministration;
@@ -52,38 +54,51 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(604, 458);
-        actionNew = new QAction(MainWindow);
-        actionNew->setObjectName(QString::fromUtf8("actionNew"));
         actionLogout = new QAction(MainWindow);
         actionLogout->setObjectName(QString::fromUtf8("actionLogout"));
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
-        actionChange_password = new QAction(MainWindow);
-        actionChange_password->setObjectName(QString::fromUtf8("actionChange_password"));
-        actionExit_2 = new QAction(MainWindow);
-        actionExit_2->setObjectName(QString::fromUtf8("actionExit_2"));
-        actionEdit_users = new QAction(MainWindow);
-        actionEdit_users->setObjectName(QString::fromUtf8("actionEdit_users"));
-        actionView_log = new QAction(MainWindow);
-        actionView_log->setObjectName(QString::fromUtf8("actionView_log"));
-        actionEdit_controled_filed = new QAction(MainWindow);
-        actionEdit_controled_filed->setObjectName(QString::fromUtf8("actionEdit_controled_filed"));
-        actionEdit_mandats = new QAction(MainWindow);
-        actionEdit_mandats->setObjectName(QString::fromUtf8("actionEdit_mandats"));
+        actionEditUsers = new QAction(MainWindow);
+        actionEditUsers->setObjectName(QString::fromUtf8("actionEditUsers"));
+        actionLog = new QAction(MainWindow);
+        actionLog->setObjectName(QString::fromUtf8("actionLog"));
+        actionMonitor = new QAction(MainWindow);
+        actionMonitor->setObjectName(QString::fromUtf8("actionMonitor"));
+        actionProtectedObjects = new QAction(MainWindow);
+        actionProtectedObjects->setObjectName(QString::fromUtf8("actionProtectedObjects"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(480, 40, 91, 23));
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(484, 80, 81, 23));
-        pushButton_3 = new QPushButton(centralwidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(480, 130, 91, 31));
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         treeView = new QTreeView(centralwidget);
         treeView->setObjectName(QString::fromUtf8("treeView"));
-        treeView->setGeometry(QRect(10, 0, 461, 421));
+
+        gridLayout->addWidget(treeView, 0, 1, 5, 1);
+
+        newFolderButton = new QPushButton(centralwidget);
+        newFolderButton->setObjectName(QString::fromUtf8("newFolderButton"));
+
+        gridLayout->addWidget(newFolderButton, 1, 3, 1, 1);
+
+        newFileButton = new QPushButton(centralwidget);
+        newFileButton->setObjectName(QString::fromUtf8("newFileButton"));
+
+        gridLayout->addWidget(newFileButton, 2, 3, 1, 1);
+
+        deleteButton = new QPushButton(centralwidget);
+        deleteButton->setObjectName(QString::fromUtf8("deleteButton"));
+
+        gridLayout->addWidget(deleteButton, 3, 3, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 4, 3, 1, 1);
+
+        upButton = new QPushButton(centralwidget);
+        upButton->setObjectName(QString::fromUtf8("upButton"));
+
+        gridLayout->addWidget(upButton, 0, 3, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -99,14 +114,12 @@ public:
 
         menubar->addAction(menuFile->menuAction());
         menubar->addAction(menuAdministration->menuAction());
-        menuFile->addAction(actionNew);
         menuFile->addAction(actionLogout);
         menuFile->addAction(actionExit);
-        menuFile->addAction(actionExit_2);
-        menuAdministration->addAction(actionEdit_users);
-        menuAdministration->addAction(actionView_log);
-        menuAdministration->addAction(actionEdit_controled_filed);
-        menuAdministration->addAction(actionEdit_mandats);
+        menuAdministration->addAction(actionEditUsers);
+        menuAdministration->addAction(actionLog);
+        menuAdministration->addAction(actionMonitor);
+        menuAdministration->addAction(actionProtectedObjects);
 
         retranslateUi(MainWindow);
 
@@ -116,18 +129,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        actionNew->setText(QApplication::translate("MainWindow", "New Folder", 0, QApplication::UnicodeUTF8));
-        actionLogout->setText(QApplication::translate("MainWindow", "New File", 0, QApplication::UnicodeUTF8));
-        actionExit->setText(QApplication::translate("MainWindow", "Logout", 0, QApplication::UnicodeUTF8));
-        actionChange_password->setText(QApplication::translate("MainWindow", "Change password", 0, QApplication::UnicodeUTF8));
-        actionExit_2->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));
-        actionEdit_users->setText(QApplication::translate("MainWindow", "Edit users", 0, QApplication::UnicodeUTF8));
-        actionView_log->setText(QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));
-        actionEdit_controled_filed->setText(QApplication::translate("MainWindow", "Controled files", 0, QApplication::UnicodeUTF8));
-        actionEdit_mandats->setText(QApplication::translate("MainWindow", "Edit protected objects", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "New Folder", 0, QApplication::UnicodeUTF8));
-        pushButton_2->setText(QApplication::translate("MainWindow", "New File", 0, QApplication::UnicodeUTF8));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Delete selected", 0, QApplication::UnicodeUTF8));
+        actionLogout->setText(QApplication::translate("MainWindow", "Logout", 0, QApplication::UnicodeUTF8));
+        actionExit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));
+        actionEditUsers->setText(QApplication::translate("MainWindow", "Edit users", 0, QApplication::UnicodeUTF8));
+        actionLog->setText(QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));
+        actionMonitor->setText(QApplication::translate("MainWindow", "Controled files", 0, QApplication::UnicodeUTF8));
+        actionProtectedObjects->setText(QApplication::translate("MainWindow", "Edit protected objects", 0, QApplication::UnicodeUTF8));
+        newFolderButton->setText(QApplication::translate("MainWindow", "New Folder", 0, QApplication::UnicodeUTF8));
+        newFileButton->setText(QApplication::translate("MainWindow", "New File", 0, QApplication::UnicodeUTF8));
+        deleteButton->setText(QApplication::translate("MainWindow", "Delete selected", 0, QApplication::UnicodeUTF8));
+        upButton->setText(QApplication::translate("MainWindow", "Up", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuAdministration->setTitle(QApplication::translate("MainWindow", "Administration if admin", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

@@ -13,93 +13,78 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTableWidget" name="tableWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>256</width>
-     <height>241</height>
-    </rect>
-   </property>
-   <row>
-    <property name="text">
-     <string/>
-    </property>
-   </row>
-   <column>
-    <property name="text">
-     <string>Path</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Is Changed</string>
-    </property>
-   </column>
-   <item row="0" column="0">
-    <property name="text">
-     <string>C:\fuck.exe</string>
-    </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" rowspan="6">
+    <widget class="QTableWidget" name="tableWidget">
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>Path</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Is Changed</string>
+      </property>
+     </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>C:\fuck.exe</string>
+      </property>
+     </item>
+     <item row="0" column="1">
+      <property name="text">
+       <string>No</string>
+      </property>
+     </item>
+    </widget>
    </item>
    <item row="0" column="1">
-    <property name="text">
-     <string>No</string>
-    </property>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </item>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>30</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>70</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Delete</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_3">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>110</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Update</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_4">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>240</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Back</string>
-   </property>
-  </widget>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Delete</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="text">
+      <string>Update</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

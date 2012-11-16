@@ -14,7 +14,7 @@ class NewFile : public QDialog
 public:
     explicit NewFile(QWidget *parent = 0);
     ~NewFile();
-
+    QString getName();
 private:
     Ui::NewFile *ui;
 };

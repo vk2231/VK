@@ -4,14 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += GUI
 
 TARGET = VK
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        ident.cpp \
     mainwindow.cpp \
     textedit.cpp \
     newfile.cpp \
@@ -19,9 +18,12 @@ SOURCES += main.cpp\
     edituser.cpp \
     protectedobjects.cpp \
     log.cpp \
-    monitor.cpp
+    monitor.cpp \
+    ident.cpp \
+    user.cpp \
+    crypt.cpp
 
-HEADERS  += ident.h \
+HEADERS  += \
     mainwindow.h \
     textedit.h \
     newfile.h \
@@ -29,9 +31,12 @@ HEADERS  += ident.h \
     edituser.h \
     protectedobjects.h \
     log.h \
-    monitor.h
+    monitor.h \
+    ident.h \
+    user.h \
+    crypt.h
 
-FORMS    += ident.ui \
+FORMS    += \
     mainwindow.ui \
     textedit.ui \
     newfile.ui \
@@ -39,7 +44,18 @@ FORMS    += ident.ui \
     edituser.ui \
     protectedobjects.ui \
     log.ui \
-    monitor.ui
+    monitor.ui \
+    ident.ui
+
+
+
+
+
+
+
+
+
+
 
 
 

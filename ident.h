@@ -1,29 +1,26 @@
 #ifndef IDENT_H
 #define IDENT_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 namespace Ui {
-    class ident;
+    class Ident;
 }
 
-class ident : public QMainWindow
+class Ident : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ident(QWidget *parent = 0);
-    ~ident();
-
-signals:
-    void go();
-
+    explicit Ident(QWidget *parent = 0);
+    ~Ident();
 public slots:
-    void ok();
-
+    void pasEntered();
 
 private:
-    Ui::ident *ui;
+    Ui::Ident *ui;
+signals:
+    void login(QString);
 };
 
 #endif // IDENT_H

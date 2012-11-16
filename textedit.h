@@ -14,6 +14,7 @@ class TextEdit : public QMainWindow
 public:
     explicit TextEdit(QWidget *parent = 0);
     ~TextEdit();
+    void setUserName(QString name);
 
 private:
     Ui::TextEdit *ui;

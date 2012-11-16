@@ -1,20 +1,21 @@
 #include "ident.h"
 #include "ui_ident.h"
 
-ident::ident(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::ident)
+Ident::Ident(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Ident)
 {
     ui->setupUi(this);
-    connect( ui->pushButton,SIGNAL(clicked()), this, SLOT(ok()) );
+    connect( ui->buttonBox, SIGNAL(rejected()), parent, SLOT(close()) );
+    connect( ui->buttonBox,SIGNAL(accepted()), this, SLOT(pasEntered()) );
 }
 
-ident::~ident()
+Ident::~Ident()
 {
     delete ui;
 }
 
-void ident::ok(){
-    emit go();
-    this->close();
+void Ident::pasEntered(){
+    //проверка пары логин-пароль
+    emit login(ui->loginEdit->text());
 }

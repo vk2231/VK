@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'log.ui'
 **
-** Created: Fri 2. Nov 14:12:39 2012
+** Created: Thu 15. Nov 14:58:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,33 +15,49 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QPlainTextEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_Log
 {
 public:
+    QGridLayout *gridLayout;
     QPlainTextEdit *plainTextEdit;
-    QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QSpacerItem *verticalSpacer;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *Log)
     {
         if (Log->objectName().isEmpty())
             Log->setObjectName(QString::fromUtf8("Log"));
         Log->resize(400, 300);
+        gridLayout = new QGridLayout(Log);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         plainTextEdit = new QPlainTextEdit(Log);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(30, 10, 261, 281));
-        pushButton = new QPushButton(Log);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(310, 40, 75, 23));
+
+        gridLayout->addWidget(plainTextEdit, 0, 0, 4, 1);
+
         pushButton_2 = new QPushButton(Log);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(310, 240, 75, 23));
+
+        gridLayout->addWidget(pushButton_2, 3, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 1, 1, 1, 1);
+
+        pushButton = new QPushButton(Log);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        gridLayout->addWidget(pushButton, 2, 1, 1, 1);
+
 
         retranslateUi(Log);
 
@@ -52,8 +68,8 @@ public:
     {
         Log->setWindowTitle(QApplication::translate("Log", "Dialog", 0, QApplication::UnicodeUTF8));
         plainTextEdit->setPlainText(QApplication::translate("Log", "The log will be shown here", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("Log", "Clear", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("Log", "Back", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("Log", "Clear", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -14,55 +14,52 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>40</y>
-      <width>91</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New Folder</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>484</x>
-      <y>80</y>
-      <width>81</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New File</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>130</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete selected</string>
-    </property>
-   </widget>
-   <widget class="QTreeView" name="treeView">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>461</width>
-      <height>421</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1" rowspan="5">
+     <widget class="QTreeView" name="treeView"/>
+    </item>
+    <item row="1" column="3">
+     <widget class="QPushButton" name="newFolderButton">
+      <property name="text">
+       <string>New Folder</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QPushButton" name="newFileButton">
+      <property name="text">
+       <string>New File</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="deleteButton">
+      <property name="text">
+       <string>Delete selected</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="upButton">
+      <property name="text">
+       <string>Up</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -77,65 +74,48 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
     <addaction name="actionLogout"/>
     <addaction name="actionExit"/>
-    <addaction name="actionExit_2"/>
    </widget>
    <widget class="QMenu" name="menuAdministration">
     <property name="title">
      <string>Administration if admin</string>
     </property>
-    <addaction name="actionEdit_users"/>
-    <addaction name="actionView_log"/>
-    <addaction name="actionEdit_controled_filed"/>
-    <addaction name="actionEdit_mandats"/>
+    <addaction name="actionEditUsers"/>
+    <addaction name="actionLog"/>
+    <addaction name="actionMonitor"/>
+    <addaction name="actionProtectedObjects"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAdministration"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionNew">
-   <property name="text">
-    <string>New Folder</string>
-   </property>
-  </action>
   <action name="actionLogout">
-   <property name="text">
-    <string>New File</string>
-   </property>
-  </action>
-  <action name="actionExit">
    <property name="text">
     <string>Logout</string>
    </property>
   </action>
-  <action name="actionChange_password">
-   <property name="text">
-    <string>Change password</string>
-   </property>
-  </action>
-  <action name="actionExit_2">
+  <action name="actionExit">
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionEdit_users">
+  <action name="actionEditUsers">
    <property name="text">
     <string>Edit users</string>
    </property>
   </action>
-  <action name="actionView_log">
+  <action name="actionLog">
    <property name="text">
     <string>Log</string>
    </property>
   </action>
-  <action name="actionEdit_controled_filed">
+  <action name="actionMonitor">
    <property name="text">
     <string>Controled files</string>
    </property>
   </action>
-  <action name="actionEdit_mandats">
+  <action name="actionProtectedObjects">
    <property name="text">
     <string>Edit protected objects</string>
    </property>
