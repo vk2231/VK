@@ -29,7 +29,7 @@ public:
     ~MainWindow();
 public slots:
     void treeClicked( QModelIndex );                                                    //Гайнулин
-    void login(QString name);                                                           //Баранов
+    void login(QString name);                                                           //
     void createNewFile();                                                               //Гайнулин
     void createNewFolder();                                                             //Гайнулин
     void deleteFile();                                                                  //Гайнулин
@@ -45,7 +45,7 @@ private:
     Log* log;                                                                           //Ядгаров
     Monitor* monitor;                                                                   //Баранов, Мокроусов
     NewFile* newFile;
-    ProtectedObjects* protectedObjects;                                                 //Агабабян
+    ProtectedObjects* protectedObjects;                                                 //Гайнулин, Березин
     TextEdit* textEdit;                                                                 //Бабаков
     QFileSystemModel* fileModel;
 };
