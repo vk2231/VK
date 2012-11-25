@@ -37,6 +37,9 @@ public slots:
     int typeFS(QString path);                                                           //Березин
     void up();
     void logout();
+private slots:
+    void on_treeView_expanded(const QModelIndex &index);
+
 private:
     User user;                                                                          //Агабабян
     Ui::MainWindow *ui;

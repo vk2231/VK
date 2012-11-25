@@ -15,7 +15,7 @@ public:
     explicit TextEdit(QWidget *parent = 0);
     ~TextEdit();
     void setUserName(QString name);
-
+    void open(QString path);
 private:
     Ui::TextEdit *ui;
 };
