@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 15. Nov 14:58:25 2012
+** Created: Wed 28. Nov 22:46:03 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -43,7 +43,6 @@ public:
     QPushButton *newFileButton;
     QPushButton *deleteButton;
     QSpacerItem *verticalSpacer;
-    QPushButton *upButton;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuAdministration;
@@ -94,11 +93,6 @@ public:
 
         gridLayout->addItem(verticalSpacer, 4, 3, 1, 1);
 
-        upButton = new QPushButton(centralwidget);
-        upButton->setObjectName(QString::fromUtf8("upButton"));
-
-        gridLayout->addWidget(upButton, 0, 3, 1, 1);
-
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -138,7 +132,6 @@ public:
         newFolderButton->setText(QApplication::translate("MainWindow", "New Folder", 0, QApplication::UnicodeUTF8));
         newFileButton->setText(QApplication::translate("MainWindow", "New File", 0, QApplication::UnicodeUTF8));
         deleteButton->setText(QApplication::translate("MainWindow", "Delete selected", 0, QApplication::UnicodeUTF8));
-        upButton->setText(QApplication::translate("MainWindow", "Up", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuAdministration->setTitle(QApplication::translate("MainWindow", "Administration if admin", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

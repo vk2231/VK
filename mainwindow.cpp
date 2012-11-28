@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( ui->newFileButton, SIGNAL(clicked()), this, SLOT(createNewFile()) );
     connect( ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createNewFolder()) );
     connect( ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteFile()) );
-    connect( ui->upButton, SIGNAL(clicked()), this, SLOT(up()) );
+    //connect( ui->upButton, SIGNAL(clicked()), this, SLOT(up()) );
     connect( ui->actionLogout, SIGNAL(triggered()), this, SLOT(logout()) );
     connect( ui->actionExit, SIGNAL(triggered()), this, SLOT(close()) );
 }
