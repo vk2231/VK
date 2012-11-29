@@ -1,0 +1,10 @@
+name=NameGT;
+pass=;
+group_id=0;
+secret_level=0;
+new_file_access=0;
+new_folder_access=2;
+disc=[C];
+folder=[];
+file=[Name111];
+prog=[C:\prog.exe];

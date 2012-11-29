@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ident = new Ident(this);
-    log = new Log(this);
+    logWindow = new Log(this);
     monitor = new Monitor(this);
     newFile = new NewFile(this);
     textEdit = new TextEdit(this);
@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->hide();
     ident->show();
     ident->setModal( true );
-    log->setModal(true);
+    logWindow->setModal(true);
     monitor->setModal(true);
     newFile->setModal(true);
     editUsers->setModal(true);
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView->resizeColumnToContents(0);
 
     connect( ident, SIGNAL(login(QString)), this, SLOT( login(QString)) );
-    connect( ui->actionLog, SIGNAL(triggered()), log, SLOT(show()) );
+    connect( ui->actionLog, SIGNAL(triggered()), logWindow, SLOT(show()) );
     connect( ui->actionMonitor, SIGNAL(triggered()), monitor, SLOT(show()) );
     connect( ui->actionEditUsers, SIGNAL(triggered()), editUsers, SLOT(show()) );
     connect( ui->actionProtectedObjects, SIGNAL(triggered()), protectedObjects, SLOT(show()) );
@@ -46,9 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( ui->newFileButton, SIGNAL(clicked()), this, SLOT(createNewFile()) );
     connect( ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createNewFolder()) );
     connect( ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteFile()) );
-    //connect( ui->upButton, SIGNAL(clicked()), this, SLOT(up()) );
     connect( ui->actionLogout, SIGNAL(triggered()), this, SLOT(logout()) );
     connect( ui->actionExit, SIGNAL(triggered()), this, SLOT(close()) );
+
+    connect( this, SIGNAL(log(QString)), logWindow, SLOT(log(QString)) );
+    connect( ident, SIGNAL(log(QString)), logWindow, SLOT(log(QString)) );
 }
 
 MainWindow::~MainWindow()
@@ -112,18 +114,28 @@ void MainWindow::up(){
 void MainWindow::login(QString name){
     //действия при вводе пользователем правильного пароля
     if( name == "admin" ){
+        ui->menubar->clear();
+        ui->menubar->addMenu( ui->menuFile );
+        ui->menubar->addMenu( ui->menuAdministration );
+        ui->menuAdministration->setEnabled( true );
         ui->menuAdministration->setVisible( true );
         user.name = "admin";
     }
     else{
+        ui->menubar->clear();
+        ui->menubar->addMenu( ui->menuFile );
+        ui->menuAdministration->setEnabled( false );
         ui->menuAdministration->setVisible( false );
         user.loadFromFile( name + ".us" );
     }
     show();
+    emit log( user.name + "logined" );
 }
 
 void MainWindow::logout(){
     hide();
+    emit log( user.name + "logouted" );
+    ident->clear();
     ident->show();
 }
 

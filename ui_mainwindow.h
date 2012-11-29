@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 28. Nov 22:46:03 2012
+** Created: Thu 29. Nov 23:10:26 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -101,6 +101,8 @@ public:
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuAdministration = new QMenu(menubar);
         menuAdministration->setObjectName(QString::fromUtf8("menuAdministration"));
+        menuAdministration->setEnabled(true);
+        menuAdministration->setTearOffEnabled(false);
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -133,7 +135,7 @@ public:
         newFileButton->setText(QApplication::translate("MainWindow", "New File", 0, QApplication::UnicodeUTF8));
         deleteButton->setText(QApplication::translate("MainWindow", "Delete selected", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
-        menuAdministration->setTitle(QApplication::translate("MainWindow", "Administration if admin", 0, QApplication::UnicodeUTF8));
+        menuAdministration->setTitle(QApplication::translate("MainWindow", "Administration", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -45,12 +45,14 @@ private:
     Ui::MainWindow *ui;
     Ident* ident;                                                                       //Агабабян
     EditUsers* editUsers;                                                               //Агабабян
-    Log* log;                                                                           //Ядгаров
+    Log* logWindow;                                                                           //Ядгаров
     Monitor* monitor;                                                                   //Баранов, Мокроусов
     NewFile* newFile;
     ProtectedObjects* protectedObjects;                                                 //Гайнулин, Березин
     TextEdit* textEdit;                                                                 //Бабаков
     QFileSystemModel* fileModel;
+signals:
+    void log(QString);
 };
 
 #endif // MAINWINDOW_H

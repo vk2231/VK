@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'editusers.ui'
 **
-** Created: Thu 15. Nov 14:58:25 2012
+** Created: Thu 29. Nov 22:44:49 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -29,8 +29,6 @@ public:
     QGridLayout *gridLayout;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
     QListWidget *listWidget;
     QSpacerItem *verticalSpacer;
 
@@ -51,27 +49,14 @@ public:
 
         gridLayout->addWidget(pushButton_2, 2, 1, 1, 1);
 
-        pushButton_3 = new QPushButton(EditUsers);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-
-        gridLayout->addWidget(pushButton_3, 3, 1, 1, 1);
-
-        pushButton_4 = new QPushButton(EditUsers);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-
-        gridLayout->addWidget(pushButton_4, 4, 1, 1, 1);
-
         listWidget = new QListWidget(EditUsers);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
 
-        gridLayout->addWidget(listWidget, 1, 0, 5, 1);
+        gridLayout->addWidget(listWidget, 1, 0, 3, 1);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer, 5, 1, 1, 1);
+        gridLayout->addItem(verticalSpacer, 3, 1, 1, 1);
 
 
         retranslateUi(EditUsers);
@@ -84,19 +69,6 @@ public:
         EditUsers->setWindowTitle(QApplication::translate("EditUsers", "Dialog", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("EditUsers", "Add", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("EditUsers", "Delete", 0, QApplication::UnicodeUTF8));
-        pushButton_3->setText(QApplication::translate("EditUsers", "Edit", 0, QApplication::UnicodeUTF8));
-        pushButton_4->setText(QApplication::translate("EditUsers", "Back", 0, QApplication::UnicodeUTF8));
-
-        const bool __sortingEnabled = listWidget->isSortingEnabled();
-        listWidget->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("EditUsers", "user1", 0, QApplication::UnicodeUTF8));
-        QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("EditUsers", "user2", 0, QApplication::UnicodeUTF8));
-        QListWidgetItem *___qlistwidgetitem2 = listWidget->item(2);
-        ___qlistwidgetitem2->setText(QApplication::translate("EditUsers", "user3", 0, QApplication::UnicodeUTF8));
-        listWidget->setSortingEnabled(__sortingEnabled);
-
     } // retranslateUi
 
 };

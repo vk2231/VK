@@ -71,8 +71,14 @@
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuAdministration">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
-     <string>Administration if admin</string>
+     <string>Administration</string>
     </property>
     <addaction name="actionEditUsers"/>
     <addaction name="actionLog"/>

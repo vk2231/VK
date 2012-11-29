@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ident.ui'
 **
-** Created: Thu 15. Nov 14:58:25 2012
+** Created: Thu 29. Nov 22:44:50 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,7 +39,8 @@ public:
     {
         if (Ident->objectName().isEmpty())
             Ident->setObjectName(QString::fromUtf8("Ident"));
-        Ident->resize(233, 139);
+        Ident->resize(233, 142);
+        Ident->setModal(false);
         gridLayout = new QGridLayout(Ident);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label = new QLabel(Ident);
@@ -144,7 +145,6 @@ public:
 
 
         retranslateUi(Ident);
-        QObject::connect(buttonBox, SIGNAL(accepted()), Ident, SLOT(accept()));
         QObject::connect(buttonBox, SIGNAL(rejected()), Ident, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(Ident);
@@ -155,7 +155,7 @@ public:
         Ident->setWindowTitle(QApplication::translate("Ident", "Dialog", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("Ident", "Login", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("Ident", "Password", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("Ident", "TextLabel", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QString());
     } // retranslateUi
 
 };

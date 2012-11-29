@@ -16,10 +16,12 @@ public:
     ~Ident();
 public slots:
     void pasEntered();
+    void clear();
 
 private:
     Ui::Ident *ui;
 signals:
+    void log(QString);
     void login(QString);
 };
 

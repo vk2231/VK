@@ -1,0 +1,10 @@
+name=user1;
+pass=1234;
+group_id=1;
+secret_level=0;
+new_file_access=0;
+new_folder_access=1;
+disc=[C];
+folder=[C:\fol1];
+file=[C:\test2.txt; D:\test3.txt];
+prog=[C:\prog1.exe];
