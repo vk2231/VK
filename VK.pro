@@ -45,7 +45,10 @@ FORMS    += \
     protectedobjects.ui \
     log.ui \
     monitor.ui \
-    ident.ui
+    ident.ui \
+    userslist.ui \
+    treedialog.ui \
+    addobject.ui
 
 
 
