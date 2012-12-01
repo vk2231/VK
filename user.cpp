@@ -90,13 +90,11 @@ void User::loadFromFile(QString path){
         error = PARAMMIS;
     line.replace( "file=[", "").replace("\r\n","").replace("];","");
     while(line.contains(";")){
-        QString tmp = line.left(line.indexOf(';'));
-        file.push_back(tmp);
+        file.push_back(line.left(line.indexOf(';')));
         line = line.mid(line.indexOf(';')+1);
     }
     if (line != "")
-        file.push_back(line);
-
+        file.push_back(line.left(line.indexOf(';')));
     line=usfile.readLine();
     line=decrypt(line).replace(" ","");
     if (!line.startsWith("prog="))
@@ -112,20 +110,32 @@ void User::loadFromFile(QString path){
     usfile.close();
 }
 
+QString User:: getFileName (QString fname){
+    return fname.left(fname.indexOf(','));
+}
+
+int User::getFileAccess(QString fname){
+    QString type = fname.mid(fname.indexOf(',')+1);
+    if (type == "-r")
+        return 0;
+    else
+        return 1;
+}
+
 void User::saveToFile (){
     QString str;
     QFile usfile("users/"+ name +".us");
-    if (!usfile.open(QIODevice::ReadWrite))
+    if (!usfile.open(QIODevice::WriteOnly))
         return;
 
     QTextStream stream( &usfile );
 
-    stream<<"name=" + crypt(name) + ";\r\n";
-    stream<<"pass=" + crypt(pass) + ";\r\n";
-    stream<<"group_id=" + crypt(QString::number(group_id)) + ";\r\n";
-    stream<<"secret_level=" + crypt(QString::number(secret_level)) + ";\r\n";
-    stream<<"new_file_access=" + crypt(QString::number(new_file_access)) + ";\r\n";
-    stream<<"new_folder_access=" + crypt(QString::number(new_folder_access)) + ";\r\n";
+    stream<<crypt("name=" + name + ";\r\n")<<"\n";
+    stream<<crypt("pass=" + pass + ";\r\n")<<"\n";
+    stream<<crypt("group_id=" + QString::number(group_id) + ";\r\n")<<"\n";
+    stream<<crypt("secret_level=" + QString::number(secret_level) + ";\r\n")<<"\n";
+    stream<<crypt("new_file_access=" + QString::number(new_file_access) + ";\r\n")<<"\n";
+    stream<<crypt("new_folder_access=" + QString::number(new_folder_access) + ";\r\n")<<"\n";
 
     str="[";
     for(int i=0;i<disc.size();++i)
@@ -133,7 +143,7 @@ void User::saveToFile (){
     if (disc.size()>0)
         str.chop(2);
     str+= "]";
-    stream <<"disc=" + crypt(str) + ";\r\n";
+    stream <<crypt("disc=" + str + ";\r\n")<<"\n";
 
     str="[";
     for(int i=0;i<folder.size();++i)
@@ -141,7 +151,7 @@ void User::saveToFile (){
     if (folder.size()>0)
         str.chop(2);
     str+= "]";
-    stream <<"folder=" + crypt(str) + ";\r\n";
+    stream <<crypt("folder=" + str + ";\r\n")<<"\n";
 
     str="[";
     for(int i=0;i<file.size();++i)
@@ -149,7 +159,7 @@ void User::saveToFile (){
     if (file.size()>0)
         str.chop(2);
     str+= "]";
-    stream <<"file=" + crypt(str) + ";\r\n";
+    stream <<crypt("file=" + str + ";\r\n")<<"\n";
 
     str="[";
     for(int i=0;i<prog.size();++i)
@@ -157,7 +167,7 @@ void User::saveToFile (){
     if (prog.size()>0)
         str.chop(2);
     str+= "]";
-    stream <<"prog=" + crypt(str) + ";\r\n";
+    stream <<crypt("prog=" + str + ";\r\n")<<"\n";
     usfile.flush();
     usfile.resize(usfile.pos());
     usfile.close();

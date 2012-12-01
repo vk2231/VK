@@ -46,9 +46,9 @@ FORMS    += \
     log.ui \
     monitor.ui \
     ident.ui \
-    userslist.ui \
     treedialog.ui \
     addobject.ui
+
 
 
 
