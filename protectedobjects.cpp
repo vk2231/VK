@@ -3,11 +3,19 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <crypt.h>
+#include "log.h"
+
+
+
 
 ProtectedObjects::ProtectedObjects(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ProtectedObjects)
 {
+    //@author: Berezin
+    //TODO возможно надо добавить какие-то connetты, не могу разобраться
+    //TODO нужно добавить привязку к add buton
     ui->setupUi(this);
 
     addObjectDialogUi = new QDialog(this);
@@ -18,6 +26,9 @@ ProtectedObjects::ProtectedObjects(QWidget *parent) :
     treeDialogUi = new QDialog(this);
     treeDialog.setupUi(treeDialogUi);
     setModal(true);
+
+    setModal(true);
+
     fileModel = new QFileSystemModel(this);
     fileModel->setRootPath( QDir::homePath() );
     fileModel->setReadOnly( false );
@@ -27,36 +38,48 @@ ProtectedObjects::ProtectedObjects(QWidget *parent) :
     treeDialog.treeView->setEditTriggers(!QAbstractItemView::DoubleClicked);
     treeDialog.treeView->resizeColumnToContents(0);
 
-    usersListDialogUi = new QDialog(this);
-    usersListDialog.setupUi(usersListDialogUi);
-    setModal(true);
-    QFile file("users.txt");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QTextStream in(&file);
-    QString user;
-    while(!in.atEnd()) {
-       user = in.readLine();
-       QListWidgetItem *item = new QListWidgetItem();
-       item->setText(user);
-       usersListDialog.usersList->insertItem(1, user);
-    }
-
 
     connect(treeDialog.chooseFromTree, SIGNAL(clicked()), this, SLOT(setObjectPath()));
     connect(treeDialog.treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_treeView_doubleClicked(QModelIndex)));
 
-    connect(usersListDialog.choose, SIGNAL(clicked()), this, SLOT(setUser()));
-
-    connect(addObjectDialog.chooseUser, SIGNAL(clicked()), this, SLOT(on_chooseUser_clicked()));
     connect(addObjectDialog.chooseObject, SIGNAL(clicked()), this, SLOT(on_chooseObject_clicked()));
+\
+    initWindow();
 }
 
 ProtectedObjects::~ProtectedObjects()
 {
+    toDisk(); //TODO Правильное ли это место?
     delete ui;
 }
 
-void ProtectedObjects::on_pushButton_clicked()
+
+
+void ProtectedObjects::initWindow(){
+    /*Данная функция загружает список защищаемых оъектов из файла
+      и выводит его на listProtected, а заодо в public список protectedObjectsList
+      */
+    //@author: Berezin
+    QFile infile(protObjFile); //TODO договориться о пути к файлу
+    if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        //log(tr("ProtectedObjects:critical:cannot open list of protected objects"));
+        return;
+    }
+
+    QTextStream in(&infile);
+    QString cypherObject;
+    while(!in.atEnd()) {
+       cypherObject = in.readLine();
+       QString pureObject=decrypt(cypherObject);
+       ui->listProtected->insertItem(1,pureObject);
+       protectedObjectsList<<pureObject;
+    }
+    protectedObjectsSet=protectedObjectsList.toSet();
+    infile.close();
+}
+
+
+void ProtectedObjects::on_addButton_clicked()
 {
     addObjectDialogUi->show();
 }
@@ -73,15 +96,6 @@ void ProtectedObjects::on_treeView_doubleClicked(QModelIndex index)
 }
 
 
-void ProtectedObjects::on_chooseUser_clicked()
-{
-    usersListDialogUi->show();
-}
-
-void ProtectedObjects::on_ok_clicked()
-{
-
-}
 
 void ProtectedObjects::setObjectPath()
 {
@@ -90,13 +104,71 @@ void ProtectedObjects::setObjectPath()
 }
 
 
-void ProtectedObjects::setUser()
-{
-     addObjectDialog.userName->setText(usersListDialog.usersList->selectedItems().first()->text());
-     usersListDialogUi->close();
-}
+
 
 void ProtectedObjects::on_chooseObject_clicked()
 {
     treeDialogUi->show();
+}
+
+
+
+
+
+
+void ProtectedObjects::on_deleteButton_clicked()
+{    //удаление одного или нескольких объектов из списка защищамых ресурсов
+    //@author: Berezin
+
+    QList <QListWidgetItem *> selectedItems = ui->listProtected->selectedItems();
+    for (int item=0; item<selectedItems.size();item++){
+        protectedObjectsList.removeAll(selectedItems[item]->text());
+    }
+    ui->listProtected->clear();
+     for (size_t item=0; item<protectedObjectsList.size();item++) {
+       //QListWidgetItem *widgetitem = new QListWidgetItem();
+       //widgetitem->setText(protectedObjectsList(item));
+       ui->listProtected->insertItem(1, protectedObjectsList[item]);
+    }
+     protectedObjectsSet=protectedObjectsList.toSet();
+}
+
+
+
+
+
+
+void ProtectedObjects::addProtectedObject(QString path){
+    //Добавление защищаемого объекта в список, в множество и в табличку
+    //@author:Berezin
+    //TODO нужно соеденить с ADD button
+    if (protectedObjectsSet.contains(path))
+        //ситуация, когда мы перезаписываем секретный файл. Других случаев не должно быть
+        return;
+    protectedObjectsList<<path;
+    protectedObjectsSet<<path;
+    ui->listProtected->insertItem(1, path);
+}
+
+
+
+
+
+
+void ProtectedObjects::toDisk(){
+    //запись списка защищаемых объектов на диск
+    //@author: Berezin
+    QFile outfile(protObjFile);
+    if (!outfile.open(QIODevice::WriteOnly)){
+        //log(tr("ProtectedObjects:critical:cannot save to file"));
+        return;
+    }
+    QTextStream stream( &outfile);
+
+    for (size_t item=0;item<protectedObjectsList.size();item++){
+        stream<<crypt(protectedObjectsList[item])<<"\n";
+
+    }
+    outfile.close();
+    return;
 }
