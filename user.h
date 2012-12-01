@@ -12,8 +12,11 @@ class User
 public:
     User();
     int group_id, secret_level, new_file_access, new_folder_access;
+
     QString name, pass;
     QStringList disc, folder, file, prog;
+    QString getFileName (QString fname);
+    int getFileAccess(QString fname);
     void loadFromFile(QString path);
     void saveToFile();
     int getLastError();
