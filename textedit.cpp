@@ -18,7 +18,7 @@ AND GIVE THIS CLASS protectedObject instance
 #include <QTextStream>
 
 QString USERSCATALOG = "users";
-QString separator = "\\";
+QString SEPARATOR = "\\";
 
 TextEdit::TextEdit(QWidget *parent) :
     QMainWindow(parent),
