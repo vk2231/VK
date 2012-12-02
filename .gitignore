@@ -4,9 +4,9 @@
 *.o
 *.Debug
 *.Release
-Makefile
-Makefile.Debug
-Makefile.Release
+*Makefile*
+*Makefile.Debug*
+*Makefile.Release*
 #################
 ## Eclipse
 #################
