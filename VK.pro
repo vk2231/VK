@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     monitor.cpp \
     ident.cpp \
     user.cpp \
-    crypt.cpp
+    crypt.cpp \
+    users.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     monitor.h \
     ident.h \
     user.h \
-    crypt.h
+    crypt.h \
+    users.h
 
 FORMS    += \
     mainwindow.ui \
@@ -48,6 +50,12 @@ FORMS    += \
     ident.ui \
     treedialog.ui \
     addobject.ui
+
+
+
+
+
+
 
 
 

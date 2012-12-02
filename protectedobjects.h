@@ -5,12 +5,11 @@
 
 #include "ui_addobject.h"
 #include "ui_treedialog.h"
-//#include "ui_userslist.h"
-#include "log.h"
+//#include "log.h"
 #include <QFileSystemModel>
- #include <QListWidget>
- #include <QStringList>
- #include <QSet>
+#include <QListWidget>
+#include <QStringList>
+#include <QSet>
 #include <QList>
 
 
@@ -26,14 +25,16 @@ class ProtectedObjects : public QDialog
 
 public:
     explicit ProtectedObjects(QWidget *parent = 0);
-    ~ProtectedObjects();    
+    ~ProtectedObjects();
+
     QStringList protectedObjectsList; //список всех защищаемых путей
     QSet<QString> protectedObjectsSet; //множнство всех защищаемых путей
     //пользуйтесь более удобным для вас QStringList или QSet. Гарантируется поддержание их соответствия
     void toDisk(); //должно вызываться перед закрытием программы
               //TODO придумать правильное место для вставки в общий код.
 
-    public slots:
+
+public slots:
     void addProtectedObject(QString path);//данная функция должна вызываться после IsLegal
                                           //при таких действиях, как добавление секретного файла или папки
 

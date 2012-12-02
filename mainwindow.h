@@ -19,6 +19,7 @@ namespace Ui {
 }
 
 enum ActionFS{ delFile, delFolder, openFolder, readFile, writeFile, runProg };
+enum TypeFS{directory, programm, file}; //пока нет поддержки. НЕ пользоваться Березин
 
 class MainWindow : public QMainWindow
 {

@@ -59,6 +59,8 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::treeClicked(QModelIndex m){
+    //обработка реакции на клик по дереву папок
+    //@author: gaynulin?
     int c = typeFS(fileModel->filePath(m));
     switch(c) {
         case 0:
@@ -140,10 +142,11 @@ void MainWindow::logout(){
 }
 
 void MainWindow::createNewFile(){
+    //TODO добавление в rotectedobjects.list по необходимости. предложил Berezin
     QModelIndex index = ui->treeView->currentIndex();
     if(!index.isValid()) return;
     if(fileModel->isDir(ui->treeView->currentIndex())) {
-        if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {
+        if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {//нужна проверка, что
             QString Name = QInputDialog::getText (this, "New File", "Enter the Name");
             if(Name.isEmpty()) return;
             QFile file(fileModel->filePath(ui->treeView->currentIndex())+ "/" + Name);
@@ -158,7 +161,8 @@ void MainWindow::createNewFile(){
     }
 }
 
-void MainWindow::createNewFolder(){
+void MainWindow::createNewFolder(){    
+    //TODO добавление в rotectedobjects.list по необходимости. предложил Berezin
     if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {
         QString folderName = newFile->getName();
         if(!folderName.isEmpty())
@@ -205,7 +209,49 @@ void MainWindow::deleteFile(){
 }
 
 bool MainWindow::isLegal(QString path, ActionFS action){
-    return true;
+    //проверка действия на санкционированность и добавление
+    //в rotectedobjects.list по необходимости
+    //обновление списков доступа в группах.
+    //установка меток доступа на файлы
+    return 1; //заглушка
+
+
+    if (user.name=="admin"){
+        //админ не добавляет/удаляет из protectedobjectslist
+        //это фича, а не баг
+        return 1;}
+
+    //QString norPath=windowsStylePath(path);
+
+      switch (typeFS(path)){
+      case 1: //Directory
+          if (!protectedObjects->protectedObjectsSet.contains(path)){
+              //папка не защищается системой
+             return 1;
+          }
+          //проверить права доступа к папке у пользователя
+
+
+
+          break;
+      case 2:  //File
+          break;
+      case 3: //Prog
+          if (action!=runProg){
+              //log("trying to make not run action with .exe");
+              return false;
+          }
+          if (user.prog.contains(path)){
+                  return true;
+          }
+          log(QString("AV:").append(user.name).append(" not legal:").append(path));
+          return false;
+          break;
+      default:
+          return false;
+          break;
+      }
+      return true;//TO DELETE
 }
 
 int MainWindow::typeFS(QString path){
