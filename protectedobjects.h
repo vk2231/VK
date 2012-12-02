@@ -53,6 +53,8 @@ private slots:
 
 
     void on_deleteButton_clicked();
+    void objectSelected();
+
 
 private:
     Ui::ProtectedObjects *ui;
@@ -66,7 +68,8 @@ private:
     QFileSystemModel* fileModel;
     void initWindow();
 
-
+signals:
+    void log(QString);
 
 
 };
