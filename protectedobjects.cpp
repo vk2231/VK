@@ -43,7 +43,9 @@ ProtectedObjects::ProtectedObjects(QWidget *parent) :
     connect(treeDialog.treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_treeView_doubleClicked(QModelIndex)));
 
     connect(addObjectDialog.chooseObject, SIGNAL(clicked()), this, SLOT(on_chooseObject_clicked()));
-\
+    connect( addObjectDialog.ok, SIGNAL(clicked()), this, SLOT(objectSelected()) );
+    connect( addObjectDialog.ok, SIGNAL(clicked()), addObjectDialogUi, SLOT(close()) );
+
     initWindow();
 }
 
@@ -62,7 +64,7 @@ void ProtectedObjects::initWindow(){
     //@author: Berezin
     QFile infile(protObjFile); //TODO договориться о пути к файлу
     if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)){
-        //log(tr("ProtectedObjects:critical:cannot open list of protected objects"));
+        log(tr("ProtectedObjects:critical:cannot open list of protected objects"));
         return;
     }
 
@@ -142,6 +144,7 @@ void ProtectedObjects::addProtectedObject(QString path){
     //Добавление защищаемого объекта в список, в множество и в табличку
     //@author:Berezin
     //TODO нужно соеденить с ADD button
+    path = addObjectDialog.objectPath->text();
     if (protectedObjectsSet.contains(path))
         //ситуация, когда мы перезаписываем секретный файл. Других случаев не должно быть
         return;
@@ -160,7 +163,7 @@ void ProtectedObjects::toDisk(){
     //@author: Berezin
     QFile outfile(protObjFile);
     if (!outfile.open(QIODevice::WriteOnly)){
-        //log(tr("ProtectedObjects:critical:cannot save to file"));
+        log(tr("ProtectedObjects:critical:cannot save to file"));
         return;
     }
     QTextStream stream( &outfile);
@@ -171,4 +174,9 @@ void ProtectedObjects::toDisk(){
     }
     outfile.close();
     return;
+}
+
+void ProtectedObjects::objectSelected(){
+    QString objName = addObjectDialog.objectPath->text();
+    addProtectedObject( objName );
 }
