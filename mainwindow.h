@@ -12,14 +12,15 @@
 #include <QModelIndex>
 #include <QFileSystemModel>
 #include "user.h"
+#include "users.h"
 
 
 namespace Ui {
     class MainWindow;
 }
 
-enum ActionFS{ delFile, delFolder, openFolder, readFile, writeFile, runProg };
-enum TypeFS{directory, programm, file}; //пока нет поддержки. НЕ пользоваться Березин
+enum ActionFS{ delFile, delFolder, openFolder, readFile, writeFile, runProg,createFolder };
+enum TypeFS{directory, programm, file}; //пока нет поддержки. НЕ пользоваться
 
 class MainWindow : public QMainWindow
 {
@@ -52,6 +53,7 @@ private:
     ProtectedObjects* protectedObjects;                                                 //Гайнулин, Березин
     TextEdit* textEdit;                                                                 //Бабаков
     QFileSystemModel* fileModel;
+    Users * users;
 signals:
     void log(QString);
 };

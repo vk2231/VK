@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     newFile = new NewFile(this);
     textEdit = new TextEdit(this);
     editUsers = new EditUsers(this);
+    users = new Users();
     protectedObjects = new ProtectedObjects(this);
     fileModel = new QFileSystemModel(this);
 
@@ -142,11 +143,11 @@ void MainWindow::logout(){
 }
 
 void MainWindow::createNewFile(){
-    //TODO добавление в rotectedobjects.list по необходимости. предложил Berezin
+    //TODO нужна проверка, isLegal(path, writeFile). Berezin рекомендует
     QModelIndex index = ui->treeView->currentIndex();
     if(!index.isValid()) return;
     if(fileModel->isDir(ui->treeView->currentIndex())) {
-        if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {//нужна проверка, что
+        if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {
             QString Name = QInputDialog::getText (this, "New File", "Enter the Name");
             if(Name.isEmpty()) return;
             QFile file(fileModel->filePath(ui->treeView->currentIndex())+ "/" + Name);
@@ -162,11 +163,11 @@ void MainWindow::createNewFile(){
 }
 
 void MainWindow::createNewFolder(){    
-    //TODO добавление в rotectedobjects.list по необходимости. предложил Berezin
+    //TODO добавление в rotectedobjects.list по необходимости, либо (приоритетней) сделать проверку islegal(path, createFolder) предложил Berezin
     if(isLegal(fileModel->filePath(ui->treeView->currentIndex()), openFolder)) {
         QString folderName = newFile->getName();
         if(!folderName.isEmpty())
-            fileModel->mkdir( ui->treeView->currentIndex(), folderName );
+            fileModel->mkdir( ui->treeView->currentIndex(), folderName ); //ACHTUNG! А что будет, если эта папка уже существует (или еще хуже, защищается)? спросил Berezin.
     } else {
         //log("Attempt to change content of denied folder");
         QMessageBox msgBox;
@@ -176,6 +177,7 @@ void MainWindow::createNewFolder(){
     }
 }
 
+
 void MainWindow::deleteFile(){
     int c = typeFS(fileModel->filePath(ui->treeView->currentIndex()));
     switch(c) {
@@ -184,7 +186,7 @@ void MainWindow::deleteFile(){
             else {
                 //log("Attempt to delete denied folder");
                 QMessageBox msgBox;
-                msgBox.setText("You have not permissions to delete this folder");
+                msgBox.setText("You have not permissions to delete this folder");//TODO добавить "or it contains protected objects" Berezin
                 msgBox.setIcon(QMessageBox::Critical);
                 msgBox.exec();
             }
@@ -208,51 +210,150 @@ void MainWindow::deleteFile(){
     }
 }
 
+
+/**
+Проверка действия на санкционированность и добавление в rotectedobjects.list по необходимости
+обновление списков доступа в группах. установка меток доступа на файлы
+@author Berezin
+@arg path    путь к файлу или папке в стиле "C:", "C:/folder", "C:/file.txx"
+@arg action  один из enum ActionFS{ delFile, delFolder, openFolder, readFile, writeFile, runProg };
+@return   возможность выполнения действия
+
+перед вызовом этой функции (для поддержания protectedobjects в актуальном остоянии)
+вы должны гарантировать, что запрашиваемое дуйствие будет произведено в случае возврата true
+ */
 bool MainWindow::isLegal(QString path, ActionFS action){
-    //проверка действия на санкционированность и добавление
-    //в rotectedobjects.list по необходимости
-    //обновление списков доступа в группах.
-    //установка меток доступа на файлы
-    return 1; //заглушка
-
-
-    if (user.name=="admin"){
-        //админ не добавляет/удаляет из protectedobjectslist
+if (user.name=="admin"){
+        //здесь админ не добавляет/удаляет ничего из protectedobjectslist
         //это фича, а не баг
-        return 1;}
+        return true;
+    }
+User* userIterator;
+QStringList badpaths;
+    switch (action){
 
-    //QString norPath=windowsStylePath(path);
 
-      switch (typeFS(path)){
-      case 1: //Directory
+      case openFolder:
           if (!protectedObjects->protectedObjectsSet.contains(path)){
               //папка не защищается системой
-             return 1;
+             return true;
           }
-          //проверить права доступа к папке у пользователя
+          if (!user.disc.contains(path.section('/',0,0))) return false;
+          if (!user.folder.contains(path)) return false;
+          return true;
+          break;
+
+
+      case runProg:
+          //защищаемая программная среда. доступ ТОЛЬКО к разрешенным программам
+          if (!user.prog.contains(path)) return false;
+          return true;
+          break;
+
+
+      case readFile:
+          //path имеет вид "D:/secret.txx"
+          if (user.file.filter(path).size()==0) return false;
+          if (user.secret_level<protectedObjects->getSecretLevel(path)) return false; //ACHTUNG! Обнавлением уровня конциденциальности занимается вызвающий
+          if (path.right(path.lastIndexOf('.')).compare("txx")!=0)  return false; //TODO проверить, что txx - это расширение секретных файлов
+          return true;
+          break;
+
+
+      case delFile:
+          if (user.file.filter(path).size()==0) return false;
+          if (user.secret_level < protectedObjects->getSecretLevel(path)) return false;
+          if (user.getFileAccess(path)==0) return false;
+
+          foreach(userIterator, users->usersList ){
+              badpaths=userIterator->file.filter(path);
+              foreach (const QString &filepath,badpaths){
+                  userIterator->file.removeAll(filepath);
+              }
+          }
+         badpaths=user.file.filter(path);
+          foreach (const QString &filepath,badpaths){
+              user.file.removeAll(filepath);
+          }
+          protectedObjects->deleteProtectedObject(path);
+          users->toDisk();
+          return true;
+          break;
+
+
+    case delFolder:
+        if (!user.folder.contains(path)) return false;
+        if (protectedObjects->protectedObjectsList.filter(path).size()>1){
+            //значит вниз по дереву папок тоже есть защищаемые объекты
+            return false;
+        }
+
+        foreach(userIterator, users->usersList ){
+            userIterator->folder.removeAll(path);
+        }
+        user.folder.removeAll(path);
+        protectedObjects->deleteProtectedObject(path);
+        users->toDisk();
+        return true;
+        break;
+
+
+    case writeFile: //создание нового файла.
+        //замечу, что я не проверяю на наличие уже существующего файла
+        //TODO добавление в protectedObjects c степерью секретности происходит в другом месте по требованию
+        user.file.append(path+",-rw");
+
+        foreach(userIterator, users->usersList ){
+            if (userIterator->group_id==user.group_id && user.group_id!=-1){
+                userIterator->file.append(path+",-rw");
+                continue;
+            }
+            switch (user.new_file_access){
+            case 0:
+                break;
+            case 1:
+                userIterator->file.append(path+",-r");
+                break;
+            case 2:
+                 userIterator->file.append(path+",-rw");
+                 break;
+            default:
+                break;
+                //error
+            }
+        }
+        users->toDisk();
+        break;
 
 
 
-          break;
-      case 2:  //File
-          break;
-      case 3: //Prog
-          if (action!=runProg){
-              //log("trying to make not run action with .exe");
-              return false;
-          }
-          if (user.prog.contains(path)){
-                  return true;
-          }
-          log(QString("AV:").append(user.name).append(" not legal:").append(path));
-          return false;
-          break;
-      default:
-          return false;
-          break;
+    case createFolder:
+        protectedObjects->addProtectedObject(path);
+        user.folder.append(path);
+        foreach(userIterator, users->usersList ){
+            if (userIterator->group_id==user.group_id && user.group_id!=-1){
+                userIterator->folder.append(path);
+                continue;
+            }
+            switch (user.new_folder_access){
+            case 0:
+                break;
+            case 1:
+                userIterator->folder.append(path);
+                break;
+            default:
+                break;
+                //error
+            }
+        }
+        users->toDisk();
+        break;
+    default:
+        return false;
       }
-      return true;//TO DELETE
 }
+
+
 
 int MainWindow::typeFS(QString path){
     QModelIndex index = fileModel->index(path);

@@ -5,13 +5,14 @@
 
 #include "ui_addobject.h"
 #include "ui_treedialog.h"
-//#include "log.h"
 #include <QFileSystemModel>
 #include <QListWidget>
 #include <QStringList>
 #include <QSet>
 #include <QList>
 
+
+enum SecretLevel {notSecret, coolSecret, topSecret};
 
 #define protObjFile "protectedObjects.lst"
 
@@ -27,17 +28,20 @@ public:
     explicit ProtectedObjects(QWidget *parent = 0);
     ~ProtectedObjects();
 
-    QStringList protectedObjectsList; //список всех защищаемых путей
-    QSet<QString> protectedObjectsSet; //множнство всех защищаемых путей
-    //пользуйтесь более удобным для вас QStringList или QSet. Гарантируется поддержание их соответствия
+    QStringList protectedObjectsList;        //список всех защищаемых путей
+    QSet<QString> protectedObjectsSet;      //множнство всех защищаемых путей
+             //пользуйтесь более удобным для вас QStringList или QSet.
+            //Гарантируется поддержание их соответствия
+
     void toDisk(); //должно вызываться перед закрытием программы
-              //TODO придумать правильное место для вставки в общий код.
+                  //TODO придумать правильное место для вставки в общий код.
+
+    int getSecretLevel(QString path);
+    void deleteProtectedObject(QString path);
 
 
 public slots:
-    void addProtectedObject(QString path);//данная функция должна вызываться после IsLegal
-                                          //при таких действиях, как добавление секретного файла или папки
-
+    void addProtectedObject(QString path);
 
 private slots:
     //void on_pushButton_clicked();

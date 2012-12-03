@@ -13,9 +13,6 @@ ProtectedObjects::ProtectedObjects(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ProtectedObjects)
 {
-    //@author: Berezin
-    //TODO возможно надо добавить какие-то connetты, не могу разобраться
-    //TODO нужно добавить привязку к add buton
     ui->setupUi(this);
 
     addObjectDialogUi = new QDialog(this);
@@ -51,17 +48,18 @@ ProtectedObjects::ProtectedObjects(QWidget *parent) :
 
 ProtectedObjects::~ProtectedObjects()
 {
-    toDisk(); //TODO Правильное ли это место?
+    toDisk();
     delete ui;
 }
 
 
-
+/**
+  Загружает список защищаемых оъектов из файла
+  и выводит его на listProtected, а, заодно, в public список protectedObjectsList
+  @author: Berezin
+ */
 void ProtectedObjects::initWindow(){
-    /*Данная функция загружает список защищаемых оъектов из файла
-      и выводит его на listProtected, а заодо в public список protectedObjectsList
-      */
-    //@author: Berezin
+
     QFile infile(protObjFile); //TODO договориться о пути к файлу
     if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)){
         log(tr("ProtectedObjects:critical:cannot open list of protected objects"));
@@ -117,11 +115,12 @@ void ProtectedObjects::on_chooseObject_clicked()
 
 
 
-
+/**
+  удаление одного или нескольких объектов из списка защищамых ресурсов
+  @author: Berezin
+ */
 void ProtectedObjects::on_deleteButton_clicked()
-{    //удаление одного или нескольких объектов из списка защищамых ресурсов
-    //@author: Berezin
-
+{
     QList <QListWidgetItem *> selectedItems = ui->listProtected->selectedItems();
     for (int item=0; item<selectedItems.size();item++){
         protectedObjectsList.removeAll(selectedItems[item]->text());
@@ -135,19 +134,43 @@ void ProtectedObjects::on_deleteButton_clicked()
      protectedObjectsSet=protectedObjectsList.toSet();
 }
 
+/**
+  удаление защищаемого объекта из protectedObjects
+  @author: Berezin
+  @param path это либо обычный путь, либо особый путь к секретному файлу
+  */
+  void ProtectedObjects::deleteProtectedObject(QString path){
+      if (path.contains(".")){ //расширение .txx
+          //значит секретный файл
+        QString objectIterator;
+        foreach(objectIterator,protectedObjectsList){
+            if (objectIterator.contains(path)){
+                protectedObjectsList.removeAll(objectIterator);
+                protectedObjectsSet.remove(objectIterator);
+            }
+
+        }
+      }
+      protectedObjectsList.removeAll(path);
+      protectedObjectsSet.remove(path);
+  }
 
 
 
 
 
+/**
+   Добавление защищаемого объекта в список, в множество и в табличку
+   @author: Berezin
+*/
 void ProtectedObjects::addProtectedObject(QString path){
-    //Добавление защищаемого объекта в список, в множество и в табличку
-    //@author:Berezin
-    //TODO нужно соеденить с ADD button
+
     path = addObjectDialog.objectPath->text();
     if (protectedObjectsSet.contains(path))
-        //ситуация, когда мы перезаписываем секретный файл. Других случаев не должно быть
         return;
+    if (path.contains(",")){ //содержит уровень cекретности
+        deleteProtectedObject(path.left(path.indexOf(',')));
+    }
     protectedObjectsList<<path;
     protectedObjectsSet<<path;
     ui->listProtected->insertItem(1, path);
@@ -156,11 +179,35 @@ void ProtectedObjects::addProtectedObject(QString path){
 
 
 
+/**
+  Вычисление степени секретности файла
+  @author Berezin
+  @param path - путь к файлу в стиле "C:/file.txx"
+  @return 0-notSecret, 1-coolSecret, 2-topSecret, -1 - error
+ */
+int  ProtectedObjects::getSecretLevel(QString path){
+    if (!path.contains(",")){
+        //error нету грифа
+        return -1;
+    }
+    if (path.at(path.indexOf(',')+1)==QChar('0'))
+        return 0;
+    else if(path.at(path.indexOf(',')+1)==QChar('1'))
+        return 1;
+    else if(path.at(path.indexOf(',')+1)==QChar('2'))
+        return 2;
+    return -1;
+}
 
 
+
+
+/**
+   запись списка защищаемых объектов на диск
+   @author: Berezin
+  */
 void ProtectedObjects::toDisk(){
-    //запись списка защищаемых объектов на диск
-    //@author: Berezin
+
     QFile outfile(protObjFile);
     if (!outfile.open(QIODevice::WriteOnly)){
         log(tr("ProtectedObjects:critical:cannot save to file"));
@@ -175,6 +222,9 @@ void ProtectedObjects::toDisk(){
     outfile.close();
     return;
 }
+
+
+
 
 void ProtectedObjects::objectSelected(){
     QString objName = addObjectDialog.objectPath->text();
